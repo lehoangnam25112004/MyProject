@@ -1,0 +1,45 @@
+@model ConstructionProjectManagement.ViewModels.ContractListViewModel
+@using ConstructionProjectManagement.Models
+@{
+    ViewData["Title"] = "Hợp đồng và tài liệu";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Hợp đồng và tài liệu dự án</h1>
+    @if (User.IsInRole("Admin") || User.IsInRole("Project Director") || User.IsInRole("Project Manager"))
+    {
+        <a class="btn btn-primary" asp-action="Create">Tạo hợp đồng</a>
+    }
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Số hợp đồng</th>
+                    <th>Dự án</th>
+                    <th>Giá trị</th>
+                    <th>Ngày hiệu lực</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var contract in Model.Contracts)
+            {
+                <tr>
+                    <td>@contract.ContractNumber</td>
+                    <td>@contract.Project.ProjectCode - @contract.Project.Name</td>
+                    <td>@contract.ContractValue.ToString("N0")</td>
+                    <td>@contract.EffectiveDate?.ToString("dd/MM/yyyy")</td>
+                    <td>@contract.Status</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-primary" asp-action="Details" asp-route-id="@contract.Id">Chi tiết</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

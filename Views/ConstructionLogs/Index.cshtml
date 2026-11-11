@@ -1,0 +1,9 @@
+@model ConstructionProjectManagement.ViewModels.ConstructionLogIndexViewModel
+@{ ViewData["Title"] = "Nhật ký thi công"; }
+<div class="d-flex justify-content-between align-items-center mb-3"><h1 class="h3">Nhật ký thi công</h1><a asp-action="Create" class="btn btn-primary">Tạo nhật ký</a></div>
+@if (TempData["SuccessMessage"] is string success) { <div class="alert alert-success">@success</div> }
+<form method="get" class="mb-3"><select name="projectId" class="form-select" onchange="this.form.submit()"><option value="">-- Tất cả dự án --</option>@foreach (var project in Model.Projects) { <option value="@project.Id">@project.ProjectCode - @project.Name</option> }</select></form>
+@foreach (var log in Model.Logs)
+{
+    <article class="card mb-3"><div class="card-header d-flex justify-content-between"><strong>@log.Project.ProjectCode - @log.LogDate.ToString("dd/MM/yyyy")</strong><span>@log.CreatedBy.FullName</span></div><div class="card-body"><p><strong>Thời tiết:</strong> @log.Weather</p><p><strong>Công việc:</strong> @log.WorkPerformed</p><p><strong>Nhân lực:</strong> @log.Workforce</p>@if (!string.IsNullOrWhiteSpace(log.MaterialsUsed)) { <p><strong>Vật tư:</strong> @log.MaterialsUsed</p> }@if (!string.IsNullOrWhiteSpace(log.EquipmentUsed)) { <p><strong>Thiết bị:</strong> @log.EquipmentUsed</p> }@if (!string.IsNullOrWhiteSpace(log.Issues)) { <p class="text-danger"><strong>Vấn đề:</strong> @log.Issues</p> }<a asp-action="Edit" asp-route-id="@log.Id">Sửa</a></div></article>
+}

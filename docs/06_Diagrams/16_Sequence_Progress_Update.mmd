@@ -1,0 +1,15 @@
+sequenceDiagram
+    actor Worker as Nhân viên
+    participant View as Progress View
+    participant Controller as ProgressController
+    participant Service as ProgressService
+    participant Db as ApplicationDbContext
+    Worker->>View: Nhập phần trăm và trạng thái
+    View->>Controller: POST Update
+    Controller->>Service: Update progress
+    Service->>Db: Đọc task hiện tại
+    Service->>Db: Lưu TaskProgressHistory
+    Service->>Db: Cập nhật Task
+    Db-->>Service: Saved
+    Service-->>Controller: Result
+    Controller-->>View: Redirect với thông báo

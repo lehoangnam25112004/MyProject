@@ -1,0 +1,48 @@
+@model ConstructionProjectManagement.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Tổng quan";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-1">Tổng quan hệ thống</h1>
+        <p class="text-muted mb-0">Số liệu được lấy trực tiếp từ cơ sở dữ liệu.</p>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card dashboard-card h-100">
+            <div class="card-body">
+                <p class="text-muted mb-1">Tài khoản đang hoạt động</p>
+                <p class="display-6 mb-0">@Model.ActiveUserCount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card dashboard-card h-100">
+            <div class="card-body">
+                <p class="text-muted mb-1">Tổng số dự án</p>
+                <p class="display-6 mb-0">@Model.ProjectCount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card dashboard-card h-100">
+            <div class="card-body">
+                <p class="text-muted mb-1">Dự án đang thực hiện</p>
+                <p class="display-6 mb-0">@Model.ActiveProjectCount</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row g-3 mt-1">
+    <div class="col-md-3"><div class="card dashboard-card h-100"><div class="card-body"><span class="text-muted">Dự án hoàn thành</span><p class="display-6 mb-0">@Model.CompletedProjectCount</p></div></div></div>
+    <div class="col-md-3"><div class="card dashboard-card h-100"><div class="card-body"><span class="text-muted">Công việc đang mở</span><p class="display-6 mb-0">@Model.OpenTaskCount</p></div></div></div>
+    <div class="col-md-3"><div class="card dashboard-card h-100"><div class="card-body"><span class="text-muted">Công việc quá hạn</span><p class="display-6 mb-0">@Model.OverdueTaskCount</p></div></div></div>
+    <div class="col-md-3"><div class="card dashboard-card h-100"><div class="card-body"><span class="text-muted">Chi phí đã ghi nhận</span><p class="mb-0 fs-4">@Model.TotalExpense.ToString("N0")</p></div></div></div>
+</div>
+<div class="row g-3 mt-1">
+    <div class="col-md-6"><div class="card dashboard-card"><div class="card-body"><span class="text-muted">Phiếu vật tư chờ duyệt</span><p class="display-6 mb-0">@Model.PendingMaterialRequestCount</p></div></div></div>
+    <div class="col-md-6"><div class="card dashboard-card"><div class="card-body"><span class="text-muted">Yêu cầu nghiệm thu chờ xử lý</span><p class="display-6 mb-0">@Model.PendingInspectionCount</p></div></div></div>
+</div>

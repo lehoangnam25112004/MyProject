@@ -1,0 +1,58 @@
+classDiagram
+    class Project {
+        +int Id
+        +string ProjectCode
+        +ProjectStatus Status
+        +bool IsArchived
+    }
+    class Task {
+        +int Id
+        +int ProjectId
+        +TaskStatus Status
+        +decimal PercentComplete
+        +bool RequiresInspection
+    }
+    class Material {
+        +int Id
+        +string MaterialCode
+        +decimal CurrentStock
+    }
+    class MaterialRequest {
+        +int Id
+        +int ProjectId
+        +MaterialRequestStatus Status
+    }
+    class Equipment {
+        +int Id
+        +string EquipmentCode
+        +EquipmentStatus Status
+    }
+    class ConstructionLog {
+        +int Id
+        +int ProjectId
+        +DateTime LogDate
+    }
+    class InspectionRequest {
+        +int Id
+        +int TaskId
+        +InspectionResult Result
+    }
+    class ProjectExpense {
+        +int Id
+        +int ProjectId
+        +decimal Amount
+    }
+    class ProjectHandover {
+        +int Id
+        +int ProjectId
+        +bool IsConfirmed
+    }
+    Project "1" --> "*" Task
+    Project "1" --> "*" MaterialRequest
+    Project "1" --> "*" EquipmentAssignment
+    Project "1" --> "*" ConstructionLog
+    Project "1" --> "*" InspectionRequest
+    Project "1" --> "*" ProjectExpense
+    Project "1" --> "*" ProjectHandover
+    Task "1" --> "*" InspectionRequest
+    MaterialRequest "*" --> "*" Material

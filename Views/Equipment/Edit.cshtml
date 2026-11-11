@@ -1,0 +1,8 @@
+@model ConstructionProjectManagement.ViewModels.EquipmentEditViewModel
+@{ ViewData["Title"] = "Sửa thiết bị"; }
+<h1 class="h3 mb-3">Sửa thiết bị</h1>
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="card card-body">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <partial name="_Form" model="Model" />
+    <button class="btn btn-primary" type="submit">Lưu</button>
+</form>

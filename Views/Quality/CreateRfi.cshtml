@@ -1,0 +1,10 @@
+@model ConstructionProjectManagement.ViewModels.RfiCreateViewModel
+@using ConstructionProjectManagement.Models
+@{ ViewData["Title"] = "Tạo RFI"; var projects = (IReadOnlyCollection<Project>)ViewBag.Projects; var tasks = (IReadOnlyCollection<ConstructionProjectManagement.Models.Task>)ViewBag.Tasks; }
+<h1 class="h3 mb-3">Tạo yêu cầu làm rõ (RFI)</h1>
+<form asp-action="CreateRfi" method="post" class="card card-body"><div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="row g-3"><div class="col-md-6"><label class="form-label">Dự án</label><select asp-for="ProjectId" class="form-select"><option value="">-- Chọn --</option>@foreach(var item in projects){<option value="@item.Id">@item.ProjectCode - @item.Name</option>}</select></div>
+<div class="col-md-6"><label class="form-label">Công việc</label><select asp-for="TaskId" class="form-select"><option value="">-- Không chọn --</option>@foreach(var item in tasks){<option value="@item.Id">@item.Title</option>}</select></div>
+<div class="col-12"><label asp-for="Subject" class="form-label">Chủ đề</label><input asp-for="Subject" class="form-control" /></div>
+<div class="col-12"><label asp-for="Question" class="form-label">Nội dung cần làm rõ</label><textarea asp-for="Question" class="form-control"></textarea></div></div>
+<button class="btn btn-primary mt-3">Lưu RFI</button></form>

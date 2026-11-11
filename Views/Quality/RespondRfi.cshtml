@@ -1,0 +1,4 @@
+@model ConstructionProjectManagement.ViewModels.RfiRespondViewModel
+@{ ViewData["Title"] = "Phản hồi RFI"; }
+<h1 class="h3 mb-3">Phản hồi RFI</h1>
+<form asp-action="RespondRfi" method="post" class="card card-body"><div asp-validation-summary="ModelOnly" class="text-danger"></div><label asp-for="Response" class="form-label">Phản hồi</label><textarea asp-for="Response" class="form-control mb-3"></textarea><button class="btn btn-primary">Lưu phản hồi</button></form>

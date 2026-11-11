@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor Engineer as Supervising Engineer
+    participant View as Quality View
+    participant Controller as QualityController
+    participant Service as QualityService
+    participant Db as ApplicationDbContext
+    Engineer->>View: Tạo yêu cầu nghiệm thu
+    View->>Controller: POST CreateInspection
+    Controller->>Service: CreateInspection
+    Service->>Db: Kiểm tra RequiresInspection
+    Service->>Db: Lưu InspectionRequest
+    Engineer->>View: Ghi nhận kết quả
+    View->>Controller: POST RecordInspection
+    Controller->>Service: RecordInspection
+    alt Đạt
+        Service->>Db: Task Completed
+    else Không đạt
+        Service->>Db: Task NeedsRework và lưu khắc phục
+    end
+    Service->>Db: Lưu InspectionHistory

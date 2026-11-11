@@ -1,0 +1,67 @@
+@model ConstructionProjectManagement.ViewModels.ProjectListViewModel
+@using ConstructionProjectManagement.Models
+@{
+    ViewData["Title"] = "Quản lý dự án";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Quản lý dự án</h1>
+    @if (User.IsInRole("Admin") || User.IsInRole("Project Director"))
+    {
+        <a class="btn btn-primary" asp-action="Create">Tạo dự án</a>
+    }
+</div>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success">@successMessage</div>
+}
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Mã dự án</th>
+                    <th>Tên dự án</th>
+                    <th>Project Manager</th>
+                    <th>Thời gian</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var project in Model.Projects)
+            {
+                <tr>
+                    <td>@project.ProjectCode</td>
+                    <td>@project.Name</td>
+                    <td>@project.ProjectManager?.FullName</td>
+                    <td>@project.StartDate.ToString("dd/MM/yyyy") - @project.ExpectedEndDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <span class="badge text-bg-primary">
+                            @(project.Status switch
+                            {
+                                ProjectStatus.Draft => "Nháp",
+                                ProjectStatus.Planning => "Lập kế hoạch",
+                                ProjectStatus.InProgress => "Đang thực hiện",
+                                ProjectStatus.OnHold => "Tạm dừng",
+                                ProjectStatus.Completed => "Hoàn thành",
+                                ProjectStatus.Cancelled => "Đã hủy",
+                                _ => project.Status.ToString()
+                            })
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-primary" asp-action="Details" asp-route-id="@project.Id">Chi tiết</a>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Project Director"))
+                        {
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@project.Id">Sửa</a>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

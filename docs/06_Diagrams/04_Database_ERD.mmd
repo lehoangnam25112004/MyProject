@@ -1,0 +1,271 @@
+erDiagram
+    ASPNETUSERS {
+        string Id PK
+        string FullName
+        bool IsActive
+    }
+    PROJECT {
+        int Id PK
+        string ProjectCode UK
+        string Name
+        string Status
+        string ProjectManagerId FK
+    }
+    PROJECT_MEMBER {
+        int Id PK
+        int ProjectId FK
+        string UserId FK
+    }
+    CONTRACT {
+        int Id PK
+        int ProjectId FK
+        string ContractNumber UK
+        decimal ContractValue
+        string Status
+    }
+    PROJECT_DOCUMENT {
+        int Id PK
+        int ProjectId FK
+        int ContractId FK
+        string FileName
+        string Category
+    }
+    PROJECT_PHASE {
+        int Id PK
+        int ProjectId FK
+        string Name
+        int SequenceOrder
+    }
+    WORK_ITEM {
+        int Id PK
+        int ProjectId FK
+        int ProjectPhaseId FK
+        int ParentWorkItemId FK
+        string WbsCode UK
+        string Name
+        int Level
+        string Status
+    }
+    TASK {
+        int Id PK
+        int ProjectId FK
+        int WorkItemId FK
+        int ParentTaskId FK
+        string Title
+        string Status
+        decimal PercentComplete
+    }
+    TASK_ASSIGNMENT {
+        int Id PK
+        int TaskId FK
+        string UserId FK
+    }
+    TASK_PROGRESS_HISTORY {
+        int Id PK
+        int TaskId FK
+        decimal PreviousPercentComplete
+        decimal NewPercentComplete
+        string DelayReason
+        string UpdatedById FK
+    }
+    DEPARTMENT {
+        int Id PK
+        string Name UK
+        bool IsActive
+    }
+    EMPLOYEE {
+        int Id PK
+        string EmployeeCode UK
+        string UserId FK
+        int DepartmentId FK
+        string Position
+        bool IsActive
+    }
+    CONSTRUCTION_TEAM {
+        int Id PK
+        string Name
+        string Description
+    }
+    TEAM_MEMBER {
+        int Id PK
+        int TeamId FK
+        int EmployeeId FK
+    }
+    MATERIAL {
+        int Id PK
+        string MaterialCode UK
+        string Name
+        string Unit
+        decimal CurrentStock
+        bool IsActive
+    }
+    MATERIAL_REQUEST {
+        int Id PK
+        int ProjectId FK
+        int TaskId FK
+        string RequestedById FK
+        string ApprovedById FK
+        string Status
+        datetime RequestedAt
+    }
+    MATERIAL_REQUEST_ITEM {
+        int Id PK
+        int MaterialRequestId FK
+        int MaterialId FK
+        decimal QuantityRequested
+        decimal QuantityIssued
+    }
+    MATERIAL_TRANSACTION {
+        int Id PK
+        int MaterialId FK
+        int MaterialRequestId FK
+        int ProjectId FK
+        int TaskId FK
+        decimal Quantity
+        string Type
+        string PerformedById FK
+    }
+    EQUIPMENT {
+        int Id PK
+        string EquipmentCode UK
+        string Name
+        string Category
+        string Status
+        bool IsActive
+    }
+    EQUIPMENT_ASSIGNMENT {
+        int Id PK
+        int EquipmentId FK
+        int ProjectId FK
+        int TaskId FK
+        string AssignedToId FK
+        datetime HandedOverAt
+        datetime ReturnedAt
+        string ReturnedById FK
+    }
+    CONSTRUCTION_LOG {
+        int Id PK
+        int ProjectId FK
+        datetime LogDate
+        string CreatedById FK
+        string Weather
+        string Workforce
+        string WorkPerformed
+        string MaterialsUsed
+        string EquipmentUsed
+        string Issues
+        string AttachmentStorageName
+    }
+    INCIDENT {
+        int Id PK
+        int ProjectId FK
+        int TaskId FK
+        string Title
+        string Priority
+        string Status
+        string AssignedToId FK
+        string ReportedById FK
+    }
+    RFI_REQUEST {
+        int Id PK
+        int ProjectId FK
+        int TaskId FK
+        string Subject
+        string Question
+        string Response
+        string Status
+        string CreatedById FK
+        string RespondedById FK
+    }
+    INSPECTION_REQUEST {
+        int Id PK
+        int ProjectId FK
+        int TaskId FK
+        string Result
+        string RequestedById FK
+        string InspectedById FK
+    }
+    INSPECTION_HISTORY {
+        int Id PK
+        int InspectionRequestId FK
+        string Result
+        string InspectedById FK
+        datetime InspectedAt
+    }
+    PROJECT_EXPENSE {
+        int Id PK
+        int ProjectId FK
+        string Category
+        string Description
+        decimal Amount
+        datetime ExpenseDate
+        string RecordedById FK
+    }
+    PROJECT_HANDOVER {
+        int Id PK
+        int ProjectId FK
+        string Title
+        string ReceivedByName
+        string HandedOverById FK
+        datetime HandoverDate
+        bool IsConfirmed
+    }
+    PROJECT ||--o{ PROJECT_MEMBER : includes
+    ASPNETUSERS ||--o{ PROJECT_MEMBER : participates
+    ASPNETUSERS o|--o{ PROJECT : manages
+    PROJECT ||--o{ WORK_ITEM : contains
+    WORK_ITEM o|--o{ WORK_ITEM : hierarchy
+    PROJECT ||--o{ CONTRACT : has
+    PROJECT ||--o{ PROJECT_DOCUMENT : contains
+    CONTRACT o|--o{ PROJECT_DOCUMENT : references
+    PROJECT ||--o{ PROJECT_PHASE : contains
+    PROJECT_PHASE ||--o{ WORK_ITEM : groups
+    WORK_ITEM o|--o{ WORK_ITEM : parent
+    PROJECT ||--o{ TASK : contains
+    WORK_ITEM o|--o{ TASK : links
+    TASK o|--o{ TASK : subtask
+    TASK ||--o{ TASK_ASSIGNMENT : assigned
+    ASPNETUSERS ||--o{ TASK_ASSIGNMENT : performs
+    TASK ||--o{ TASK_PROGRESS_HISTORY : tracks
+    ASPNETUSERS ||--o{ TASK_PROGRESS_HISTORY : updates
+    ASPNETUSERS ||--o{ EMPLOYEE : profile
+    DEPARTMENT o|--o{ EMPLOYEE : assigns
+    CONSTRUCTION_TEAM ||--o{ TEAM_MEMBER : contains
+    EMPLOYEE ||--o{ TEAM_MEMBER : joins
+    PROJECT ||--o{ MATERIAL_REQUEST : requests
+    TASK o|--o{ MATERIAL_REQUEST : supports
+    ASPNETUSERS ||--o{ MATERIAL_REQUEST : creates
+    MATERIAL_REQUEST ||--o{ MATERIAL_REQUEST_ITEM : contains
+    MATERIAL ||--o{ MATERIAL_REQUEST_ITEM : requested
+    MATERIAL ||--o{ MATERIAL_TRANSACTION : moves
+    MATERIAL_REQUEST o|--o{ MATERIAL_TRANSACTION : generates
+    PROJECT ||--o{ MATERIAL_TRANSACTION : tracks
+    TASK o|--o{ MATERIAL_TRANSACTION : consumes
+    ASPNETUSERS ||--o{ MATERIAL_TRANSACTION : performs
+    EQUIPMENT ||--o{ EQUIPMENT_ASSIGNMENT : tracked
+    PROJECT ||--o{ EQUIPMENT_ASSIGNMENT : uses
+    TASK o|--o{ EQUIPMENT_ASSIGNMENT : supports
+    ASPNETUSERS ||--o{ EQUIPMENT_ASSIGNMENT : receives
+    ASPNETUSERS ||--o{ EQUIPMENT_ASSIGNMENT : hands_over
+    PROJECT ||--o{ CONSTRUCTION_LOG : records
+    ASPNETUSERS ||--o{ CONSTRUCTION_LOG : creates
+    PROJECT ||--o{ INCIDENT : has
+    TASK o|--o{ INCIDENT : relates
+    ASPNETUSERS ||--o{ INCIDENT : reports
+    ASPNETUSERS o|--o{ INCIDENT : resolves
+    PROJECT ||--o{ RFI_REQUEST : has
+    TASK o|--o{ RFI_REQUEST : relates
+    ASPNETUSERS ||--o{ RFI_REQUEST : creates
+    ASPNETUSERS o|--o{ RFI_REQUEST : responds
+    PROJECT ||--o{ INSPECTION_REQUEST : has
+    TASK ||--o{ INSPECTION_REQUEST : checks
+    ASPNETUSERS ||--o{ INSPECTION_REQUEST : requests
+    ASPNETUSERS o|--o{ INSPECTION_REQUEST : inspects
+    INSPECTION_REQUEST ||--o{ INSPECTION_HISTORY : records
+    ASPNETUSERS ||--o{ INSPECTION_HISTORY : performs
+    PROJECT ||--o{ PROJECT_EXPENSE : incurs
+    ASPNETUSERS ||--o{ PROJECT_EXPENSE : records
+    PROJECT ||--o{ PROJECT_HANDOVER : closes
+    ASPNETUSERS ||--o{ PROJECT_HANDOVER : hands_over
+
+    %% Các bảng nghiệp vụ còn lại sẽ được chốt trong Database Design trước khi code Entity.

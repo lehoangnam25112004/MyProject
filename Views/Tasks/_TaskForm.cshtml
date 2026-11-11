@@ -1,0 +1,111 @@
+@model ConstructionProjectManagement.ViewModels.TaskEditViewModel
+@using ConstructionProjectManagement.Models
+@using TaskEntity = ConstructionProjectManagement.Models.Task
+@using TaskStatusModel = ConstructionProjectManagement.Models.TaskStatus
+@{
+    var projects = (IReadOnlyCollection<Project>)ViewBag.Projects;
+    var workItems = (IReadOnlyCollection<WorkItem>)ViewBag.WorkItems;
+    var tasks = (IReadOnlyCollection<TaskEntity>)ViewBag.Tasks;
+    var users = (IReadOnlyCollection<ApplicationUser>)ViewBag.Users;
+}
+
+<form asp-action="@(Model.Id is null ? "Create" : "Edit")" asp-route-id="@Model.Id" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="ProjectId" class="form-label"></label>
+                    <select asp-for="ProjectId" class="form-select">
+                        <option value="">-- Chọn dự án --</option>
+                        @foreach (var project in projects)
+                        {
+                            <option value="@project.Id">@project.ProjectCode - @project.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="WorkItemId" class="form-label"></label>
+                    <select asp-for="WorkItemId" class="form-select">
+                        <option value="">-- Không gắn WBS --</option>
+                        @foreach (var item in workItems)
+                        {
+                            <option value="@item.Id">@item.WbsCode - @item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ParentTaskId" class="form-label"></label>
+                    <select asp-for="ParentTaskId" class="form-select">
+                        <option value="">-- Công việc gốc --</option>
+                        @foreach (var task in tasks)
+                        {
+                            <option value="@task.Id">@task.Title</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Priority" class="form-label"></label>
+                    <select asp-for="Priority" asp-items="Html.GetEnumSelectList<TaskPriority>()" class="form-select"></select>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Status" class="form-label"></label>
+                    <select asp-for="Status" asp-items="Html.GetEnumSelectList<TaskStatusModel>()" class="form-select"></select>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="PercentComplete" class="form-label"></label>
+                    <input asp-for="PercentComplete" class="form-control" />
+                    <span asp-validation-for="PercentComplete" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <div class="form-check mb-2">
+                        <input asp-for="RequiresInspection" class="form-check-input" />
+                        <label asp-for="RequiresInspection" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="PlannedStartDate" class="form-label"></label>
+                    <input asp-for="PlannedStartDate" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="PlannedEndDate" class="form-label"></label>
+                    <input asp-for="PlannedEndDate" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ActualStartDate" class="form-label"></label>
+                    <input asp-for="ActualStartDate" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ActualEndDate" class="form-label"></label>
+                    <input asp-for="ActualEndDate" class="form-control" />
+                </div>
+                <div class="col-12">
+                    <label asp-for="AssigneeIds" class="form-label">Người phụ trách</label>
+                    <select asp-for="AssigneeIds" class="form-select" multiple>
+                        @foreach (var user in users)
+                        {
+                            <option value="@user.Id">@user.FullName (@user.UserName)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Lưu</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

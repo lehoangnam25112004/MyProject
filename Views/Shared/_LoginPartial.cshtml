@@ -1,0 +1,18 @@
+@using Microsoft.AspNetCore.Identity
+@using ConstructionProjectManagement.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="d-flex align-items-center gap-3">
+        <span class="text-muted">@User.Identity?.Name</span>
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post">
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Đăng xuất</button>
+        </form>
+    </div>
+}
+else
+{
+    <a class="btn btn-primary btn-sm" asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a>
+}

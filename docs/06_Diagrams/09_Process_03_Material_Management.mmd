@@ -1,0 +1,8 @@
+flowchart TD
+    A["Xác định nhu cầu"] --> B["Tạo phiếu yêu cầu"]
+    B --> C["Chọn dự án/công việc"]
+    C --> D["Materials Staff kiểm tra tồn"]
+    D --> E{"Đủ tồn kho?"}
+    E -- "Không" --> F["Từ chối"]
+    E -- "Có" --> G["Duyệt và xuất vật tư"]
+    G --> H["Cập nhật tồn kho và lịch sử"]

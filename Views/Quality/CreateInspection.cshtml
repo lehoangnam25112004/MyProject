@@ -1,0 +1,5 @@
+@model ConstructionProjectManagement.ViewModels.InspectionCreateViewModel
+@using ConstructionProjectManagement.Models
+@{ ViewData["Title"] = "Tạo yêu cầu nghiệm thu"; var tasks = (IReadOnlyCollection<ConstructionProjectManagement.Models.Task>)ViewBag.Tasks; }
+<h1 class="h3 mb-3">Tạo yêu cầu nghiệm thu</h1>
+<form asp-action="CreateInspection" method="post" class="card card-body"><div asp-validation-summary="ModelOnly" class="text-danger"></div><label asp-for="TaskId" class="form-label">Công việc cần kiểm tra</label><select asp-for="TaskId" class="form-select mb-3"><option value="">-- Chọn --</option>@foreach(var item in tasks){<option value="@item.Id">@item.Project.ProjectCode - @item.Title</option>}</select><button class="btn btn-primary">Tạo yêu cầu</button></form>

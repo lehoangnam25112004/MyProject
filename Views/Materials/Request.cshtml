@@ -1,0 +1,27 @@
+@model ConstructionProjectManagement.ViewModels.MaterialRequestCreateViewModel
+@using ConstructionProjectManagement.Models
+@{
+    ViewData["Title"] = "Yêu cầu vật tư";
+    var projects = (IReadOnlyCollection<Project>)ViewBag.Projects;
+    var tasks = (IReadOnlyCollection<ConstructionProjectManagement.Models.Task>)ViewBag.Tasks;
+    var materials = (IReadOnlyCollection<Material>)ViewBag.Materials;
+}
+<h1 class="h3 mb-3">Tạo phiếu yêu cầu vật tư</h1>
+<form asp-action="CreateRequest" method="post" class="card card-body">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row g-3 mb-3">
+        <div class="col-md-6"><label class="form-label">Dự án</label><select asp-for="ProjectId" class="form-select"><option value="">-- Chọn dự án --</option>@foreach (var project in projects) { <option value="@project.Id">@project.ProjectCode - @project.Name</option> }</select></div>
+        <div class="col-md-6"><label class="form-label">Công việc (tùy chọn)</label><select asp-for="TaskId" class="form-select"><option value="">-- Không chọn --</option>@foreach (var task in tasks) { <option value="@task.Id">@task.Title</option> }</select></div>
+        <div class="col-12"><label asp-for="Notes" class="form-label">Ghi chú</label><textarea asp-for="Notes" class="form-control"></textarea></div>
+    </div>
+    <table class="table">
+        <thead><tr><th>Vật tư</th><th>Số lượng</th></tr></thead>
+        <tbody>
+        @for (var index = 0; index < Model.Items.Count; index++)
+        {
+            <tr><td><select asp-for="Items[index].MaterialId" class="form-select"><option value="">-- Chọn vật tư --</option>@foreach (var material in materials) { <option value="@material.Id">@material.MaterialCode - @material.Name (@material.Unit)</option> }</select></td><td><input asp-for="Items[index].QuantityRequested" class="form-control" /></td></tr>
+        }
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="submit">Tạo phiếu</button>
+</form>

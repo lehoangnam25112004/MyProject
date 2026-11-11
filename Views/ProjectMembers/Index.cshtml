@@ -1,0 +1,44 @@
+@model ConstructionProjectManagement.ViewModels.ProjectMemberViewModel
+@using ConstructionProjectManagement.Models
+@{
+    ViewData["Title"] = "Thành viên dự án";
+    var project = (Project)ViewBag.Project;
+    var users = (IReadOnlyCollection<ApplicationUser>)ViewBag.Users;
+}
+<h1 class="h3 mb-3">Thành viên — @project.Name</h1>
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success">@successMessage</div>
+}
+@if (TempData["ErrorMessage"] is string errorMessage)
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+<form asp-action="Add" method="post" class="card card-body mb-4">
+    <input asp-for="ProjectId" type="hidden" />
+    <div class="row g-2 align-items-end">
+        <div class="col-md-5">
+            <label asp-for="UserId" class="form-label">Tài khoản</label>
+            <select asp-for="UserId" class="form-select">
+                <option value="">-- Chọn tài khoản --</option>
+                @foreach (var user in users)
+                {
+                    <option value="@user.Id">@user.FullName (@user.UserName)</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-5">
+            <label asp-for="AssignmentRole" class="form-label"></label>
+            <input asp-for="AssignmentRole" class="form-control" />
+        </div>
+        <div class="col-md-2"><button type="submit" class="btn btn-primary">Thêm</button></div>
+    </div>
+</form>
+<div class="card">
+    <ul class="list-group list-group-flush">
+    @foreach (var member in project.Members)
+    {
+        <li class="list-group-item">@member.User.FullName (@member.User.UserName) — @member.AssignmentRole</li>
+    }
+    </ul>
+</div>

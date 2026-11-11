@@ -1,0 +1,8 @@
+@model ConstructionProjectManagement.ViewModels.MaterialEditViewModel
+<div class="row g-3">
+    <div class="col-md-4"><label asp-for="MaterialCode" class="form-label"></label><input asp-for="MaterialCode" class="form-control" /><span asp-validation-for="MaterialCode" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="Name" class="form-label"></label><input asp-for="Name" class="form-control" /><span asp-validation-for="Name" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="Unit" class="form-label"></label><input asp-for="Unit" class="form-control" /><span asp-validation-for="Unit" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="CurrentStock" class="form-label">Tồn kho</label><input asp-for="CurrentStock" class="form-control" /></div>
+    <div class="col-md-4 form-check mt-4 ms-2"><input asp-for="IsActive" class="form-check-input" /><label asp-for="IsActive" class="form-check-label">Đang hoạt động</label></div>
+</div>

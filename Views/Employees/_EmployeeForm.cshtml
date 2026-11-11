@@ -1,0 +1,45 @@
+@model ConstructionProjectManagement.ViewModels.EmployeeEditViewModel
+@using ConstructionProjectManagement.Models
+@{
+    var users = (IReadOnlyCollection<ApplicationUser>)ViewBag.Users;
+    var departments = (IReadOnlyCollection<Department>)ViewBag.Departments;
+}
+<form asp-action="@(Model.Id is null ? "Create" : "Edit")" asp-route-id="@Model.Id" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="card card-body">
+        <div class="mb-3">
+            <label asp-for="EmployeeCode" class="form-label"></label>
+            <input asp-for="EmployeeCode" class="form-control" />
+            <span asp-validation-for="EmployeeCode" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="UserId" class="form-label"></label>
+            <select asp-for="UserId" class="form-select">
+                <option value="">-- Chọn tài khoản --</option>
+                @foreach (var user in users)
+                {
+                    <option value="@user.Id">@user.FullName (@user.UserName)</option>
+                }
+            </select>
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DepartmentId" class="form-label"></label>
+            <select asp-for="DepartmentId" class="form-select">
+                <option value="">-- Chọn bộ phận --</option>
+                @foreach (var department in departments)
+                {
+                    <option value="@department.Id">@department.Name</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3"><label asp-for="Position" class="form-label"></label><input asp-for="Position" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="Phone" class="form-label"></label><input asp-for="Phone" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="HireDate" class="form-label"></label><input asp-for="HireDate" class="form-control" /></div>
+        <div class="form-check mb-3"><input asp-for="IsActive" class="form-check-input" /><label asp-for="IsActive" class="form-check-label"></label></div>
+        <div><button type="submit" class="btn btn-primary">Lưu</button><a asp-action="Index" class="btn btn-outline-secondary ms-2">Hủy</a></div>
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,81 @@
+@model ConstructionProjectManagement.ViewModels.ProjectEditViewModel
+@using ConstructionProjectManagement.Models
+@{
+    var users = (IReadOnlyCollection<ApplicationUser>)ViewBag.Users;
+}
+
+<form asp-action="@(Model.Id is null ? "Create" : "Edit")" asp-route-id="@Model.Id" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="ProjectCode" class="form-label"></label>
+                    <input asp-for="ProjectCode" class="form-control" />
+                    <span asp-validation-for="ProjectCode" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Location" class="form-label"></label>
+                    <input asp-for="Location" class="form-control" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ClientName" class="form-label"></label>
+                    <input asp-for="ClientName" class="form-control" />
+                    <span asp-validation-for="ClientName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="StartDate" class="form-label"></label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ExpectedEndDate" class="form-label"></label>
+                    <input asp-for="ExpectedEndDate" class="form-control" />
+                    <span asp-validation-for="ExpectedEndDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Budget" class="form-label"></label>
+                    <input asp-for="Budget" class="form-control" />
+                    <span asp-validation-for="Budget" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Status" class="form-label"></label>
+                    <select asp-for="Status" asp-items="Html.GetEnumSelectList<ProjectStatus>()" class="form-select"></select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ProjectManagerId" class="form-label"></label>
+                    <select asp-for="ProjectManagerId" class="form-select">
+                        <option value="">-- Chọn người quản lý --</option>
+                        @foreach (var user in users)
+                        {
+                            <option value="@user.Id">@user.FullName (@user.UserName)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="MemberIds" class="form-label">Thành viên dự án</label>
+                    <select asp-for="MemberIds" class="form-select" multiple>
+                        @foreach (var user in users)
+                        {
+                            <option value="@user.Id">@user.FullName (@user.UserName)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Lưu</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

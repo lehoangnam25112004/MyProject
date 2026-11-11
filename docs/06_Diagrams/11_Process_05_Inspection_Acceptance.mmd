@@ -1,0 +1,8 @@
+flowchart TD
+    A["Hoàn thành công việc"] --> B["Tạo yêu cầu kiểm tra"]
+    B --> C["Người có thẩm quyền kiểm tra"]
+    C --> D{"Đạt?"}
+    D -- "Có" --> E["Xác nhận nghiệm thu"]
+    D -- "Không" --> F["Ghi lỗi và phương án khắc phục"]
+    F --> G["Khắc phục và kiểm tra lại"]
+    G --> D

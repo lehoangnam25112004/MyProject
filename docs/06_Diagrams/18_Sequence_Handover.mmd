@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor Manager as Project Manager
+    participant View as Completion View
+    participant Controller as CompletionController
+    participant Service as CompletionService
+    participant Db as ApplicationDbContext
+    Manager->>View: Lập hồ sơ bàn giao
+    View->>Controller: POST CreateHandover
+    Controller->>Service: Kiểm tra task mở
+    Service->>Db: Đọc task của dự án
+    alt Còn task mở
+        Service-->>Controller: Từ chối bàn giao
+    else Đủ điều kiện
+        Service->>Db: Lưu ProjectHandover
+        Manager->>View: Xác nhận bàn giao
+        View->>Controller: POST ConfirmHandover
+        Controller->>Service: ConfirmHandover
+        Service->>Db: IsConfirmed = true
+        Service->>Db: ArchiveProject sau kiểm tra cuối
+    end

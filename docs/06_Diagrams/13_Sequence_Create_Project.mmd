@@ -1,0 +1,16 @@
+sequenceDiagram
+    actor Director as Project Director
+    participant View as Razor View
+    participant Controller as ProjectsController
+    participant Service as ProjectService
+    participant Db as ApplicationDbContext
+    participant Sql as SQL Server
+    Director->>View: Nhập thông tin dự án
+    View->>Controller: POST Create
+    Controller->>Service: Validate and save
+    Service->>Db: Kiểm tra mã dự án
+    Db->>Sql: Query/Save Project
+    Sql-->>Db: Kết quả
+    Db-->>Service: Project saved
+    Service-->>Controller: Success/Error
+    Controller-->>View: Redirect hoặc validation

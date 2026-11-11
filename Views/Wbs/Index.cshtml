@@ -1,0 +1,38 @@
+@model ConstructionProjectManagement.ViewModels.WbsIndexViewModel
+@using ConstructionProjectManagement.Models
+@{
+    ViewData["Title"] = "Cấu trúc WBS";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">Cấu trúc WBS</h1>
+        <p class="text-muted mb-0">@Model.Project.ProjectCode - @Model.Project.Name</p>
+    </div>
+    @if (User.IsInRole("Admin") || User.IsInRole("Project Director") || User.IsInRole("Project Manager"))
+    {
+        <div>
+            <a class="btn btn-outline-primary" asp-action="CreatePhase" asp-route-projectId="@Model.Project.Id">Thêm giai đoạn</a>
+            <a class="btn btn-primary" asp-action="CreateItem" asp-route-projectId="@Model.Project.Id">Thêm hạng mục</a>
+        </div>
+    }
+</div>
+
+@foreach (var phase in Model.Project.Phases)
+{
+    <div class="card mb-3">
+        <div class="card-header fw-bold">
+            Giai đoạn @phase.SequenceOrder: @phase.Name
+            <span class="badge text-bg-secondary float-end">@phase.Status</span>
+        </div>
+        <div class="list-group list-group-flush">
+        @foreach (var item in phase.WorkItems.OrderBy(workItem => workItem.SequenceOrder))
+        {
+            <div class="list-group-item" style="padding-left: @($"{1 + item.Level * 1.5}rem")">
+                <strong>@item.WbsCode</strong> — @item.Name
+                <span class="badge text-bg-light float-end">@item.Status</span>
+            </div>
+        }
+        </div>
+    </div>
+}

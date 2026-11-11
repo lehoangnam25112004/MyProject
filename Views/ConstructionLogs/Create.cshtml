@@ -1,0 +1,8 @@
+@model ConstructionProjectManagement.ViewModels.ConstructionLogEditViewModel
+@{ ViewData["Title"] = "Tạo nhật ký thi công"; }
+<h1 class="h3 mb-3">Tạo nhật ký thi công</h1>
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="card card-body">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <partial name="_Form" model="Model" />
+    <button class="btn btn-primary" type="submit">Lưu nhật ký</button>
+</form>

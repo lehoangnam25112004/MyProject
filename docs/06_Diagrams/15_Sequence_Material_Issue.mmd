@@ -1,0 +1,21 @@
+sequenceDiagram
+    actor Staff as Materials Staff
+    participant View as Materials View
+    participant Controller as MaterialsController
+    participant Service as MaterialService
+    participant Db as ApplicationDbContext
+    Staff->>View: Duyệt phiếu yêu cầu
+    View->>Controller: POST Approve
+    Controller->>Service: SetRequestStatus
+    Service->>Db: Lưu Approved
+    Staff->>View: Chọn xuất vật tư
+    View->>Controller: POST Issue
+    Controller->>Service: IssueRequest
+    Service->>Db: Đọc tồn kho
+    alt Đủ tồn kho
+        Service->>Db: Trừ tồn và lưu transaction
+        Db-->>Service: Issued
+    else Không đủ tồn kho
+        Service-->>Controller: Error
+    end
+    Controller-->>View: Kết quả

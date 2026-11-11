@@ -1,0 +1,35 @@
+flowchart TD
+    Program["Program.cs"] --> Db["ApplicationDbContext"]
+    Program --> User["ApplicationUser"]
+    Program --> Identity["ASP.NET Core Identity"]
+    Home["HomeController<br/>(template)"] --> HomeViews["Views/Home/*"]
+    Dashboard["DashboardController"] --> DashboardService["DashboardService"]
+    Dashboard --> DashboardView["Views/Dashboard/Index.cshtml"]
+    DashboardService --> Db
+    Projects["ProjectsController"] --> ProjectService["ProjectService"]
+    Contracts["ContractsController"] --> ContractService["ContractService"]
+    Wbs["WbsController"] --> WbsService["WbsService"]
+    Tasks["TasksController"] --> TaskService["TaskService"]
+    Progress["ProgressController"] --> ProgressService["ProgressService"]
+    Employees["EmployeesController"] --> EmployeeService["EmployeeService"]
+    Materials["MaterialsController"] --> MaterialService["MaterialService"]
+    Equipment["EquipmentController"] --> EquipmentService["EquipmentService"]
+    Logs["ConstructionLogsController"] --> LogService["ConstructionLogService"]
+    Quality["QualityController"] --> QualityService["QualityService"]
+    Completion["CompletionController"] --> CompletionService["CompletionService"]
+    Account["AccountController<br/>[Authorize]"] --> UserManager["UserManager / RoleManager"]
+    Account --> AccountViews["Views/Account/*"]
+    UserManager --> Identity["ASP.NET Core Identity"]
+    Db --> Sql["SQL Server"]
+
+    ProjectService --> Db
+    ContractService --> Db
+    WbsService --> Db
+    TaskService --> Db
+    ProgressService --> Db
+    EmployeeService --> Db
+    MaterialService --> Db
+    EquipmentService --> Db
+    LogService --> Db
+    QualityService --> Db
+    CompletionService --> Db

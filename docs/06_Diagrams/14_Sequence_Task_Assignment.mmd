@@ -1,0 +1,15 @@
+sequenceDiagram
+    actor Manager as Project Manager
+    participant View as Task View
+    participant Controller as TasksController
+    participant Service as TaskService
+    participant Db as ApplicationDbContext
+    Manager->>View: Chọn task và người thực hiện
+    View->>Controller: POST Create/Edit
+    Controller->>Service: Validate task and assignees
+    Service->>Db: Kiểm tra project membership
+    Db-->>Service: Eligible users
+    Service->>Db: Lưu task assignments
+    Db-->>Service: Saved
+    Service-->>Controller: Result
+    Controller-->>View: Hiển thị kết quả

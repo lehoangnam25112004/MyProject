@@ -1,0 +1,15 @@
+flowchart LR
+    Admin["Admin"] --> UC1["01 Tài khoản và phân quyền"]
+    Director["Project Director"] --> UC2["02 Quản lý dự án"]
+    Manager["Project Manager"] --> UC2
+    Manager --> UC5["05 Quản lý công việc"]
+    Site["Site Manager"] --> UC6["06 Kế hoạch và tiến độ"]
+    Engineer["Supervising Engineer"] --> UC11["11 Sự cố, RFI và nghiệm thu"]
+    Worker["Worker"] --> UC5
+    Materials["Materials Staff"] --> UC8["08 Quản lý vật tư"]
+    Client["Client Representative"] --> UC12["12 Hoàn thành, bàn giao, báo cáo"]
+    UC2 --> UC3["03 Hợp đồng và tài liệu"]
+    UC2 --> UC4["04 Giai đoạn và WBS"]
+    UC5 --> UC7["07 Nhân sự và đội thi công"]
+    UC5 --> UC9["09 Thiết bị"]
+    UC5 --> UC10["10 Nhật ký thi công"]

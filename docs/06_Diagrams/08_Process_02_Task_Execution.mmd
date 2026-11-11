@@ -1,0 +1,8 @@
+flowchart TD
+    A["Project Manager xem công việc"] --> B["Phân công nhân sự/đội"]
+    B --> C["Nhân viên tiếp nhận"]
+    C --> D["Cập nhật trạng thái và %"]
+    D --> E["Ghi nhật ký thi công"]
+    E --> F{"Cần kiểm tra?"}
+    F -- "Có" --> G["PendingInspection"]
+    F -- "Không" --> H["Tiếp tục thực hiện"]

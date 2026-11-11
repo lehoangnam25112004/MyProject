@@ -1,0 +1,9 @@
+flowchart TD
+    A["Kiểm tra công việc, WBS, nghiệm thu"] --> B["Kiểm tra tồn đọng"]
+    B --> C{"Còn việc bắt buộc?"}
+    C -- "Có" --> D["Lập punch list và xử lý"]
+    D --> A
+    C -- "Không" --> E["Tổng hợp chi phí"]
+    E --> F["Tạo hồ sơ bàn giao"]
+    F --> G["Bên giao và bên nhận xác nhận"]
+    G --> H["Chuyển dự án Completed và lưu trữ"]

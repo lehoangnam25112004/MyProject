@@ -1,0 +1,9 @@
+@model ConstructionProjectManagement.ViewModels.EquipmentEditViewModel
+<div class="row g-3">
+    <div class="col-md-4"><label asp-for="EquipmentCode" class="form-label">Mã thiết bị</label><input asp-for="EquipmentCode" class="form-control" /><span asp-validation-for="EquipmentCode" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="Name" class="form-label"></label><input asp-for="Name" class="form-control" /><span asp-validation-for="Name" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="Category" class="form-label">Nhóm</label><input asp-for="Category" class="form-control" /></div>
+    <div class="col-md-4"><label asp-for="Status" class="form-label">Tình trạng</label><select asp-for="Status" asp-items="Html.GetEnumSelectList<ConstructionProjectManagement.Models.EquipmentStatus>()" class="form-select"></select></div>
+    <div class="col-md-8"><label asp-for="Notes" class="form-label">Ghi chú</label><textarea asp-for="Notes" class="form-control"></textarea></div>
+    <div class="col-md-4 form-check ms-2"><input asp-for="IsActive" class="form-check-input" /><label asp-for="IsActive" class="form-check-label">Đang hoạt động</label></div>
+</div>

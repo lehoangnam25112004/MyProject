@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ConstructionProjectManagement</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ConstructionProjectManagement.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="sidebar-brand" asp-controller="Home" asp-action="Index">CPMS</a>
+            <nav class="nav flex-column">
+                <a class="nav-link" asp-controller="Dashboard" asp-action="Index">Tổng quan</a>
+                <a class="nav-link" asp-controller="Account" asp-action="Profile">Thông tin cá nhân</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="nav-link" asp-controller="Account" asp-action="Index">Tài khoản và phân quyền</a>
+                }
+                <span class="sidebar-heading">Nghiệp vụ</span>
+                <a class="nav-link" asp-controller="Projects" asp-action="Index">Quản lý dự án</a>
+                <a class="nav-link" asp-controller="Contracts" asp-action="Index">Hợp đồng và tài liệu</a>
+                <a class="nav-link" asp-controller="Wbs" asp-action="Index">Cấu trúc WBS</a>
+                <a class="nav-link" asp-controller="Tasks" asp-action="Index">Quản lý công việc</a>
+                <a class="nav-link" asp-controller="Progress" asp-action="Index">Theo dõi tiến độ</a>
+                @if (User.IsInRole("Admin") || User.IsInRole("Project Director"))
+                {
+                    <a class="nav-link" asp-controller="Employees" asp-action="Index">Nhân sự và đội thi công</a>
+                    <a class="nav-link" asp-controller="Teams" asp-action="Index">Đội thi công</a>
+                }
+                <a class="nav-link" asp-controller="Materials" asp-action="Index">Quản lý vật tư</a>
+                <a class="nav-link" asp-controller="Equipment" asp-action="Index">Quản lý thiết bị</a>
+                <a class="nav-link" asp-controller="ConstructionLogs" asp-action="Index">Nhật ký thi công</a>
+                <a class="nav-link" asp-controller="Quality" asp-action="Index">Sự cố, RFI và nghiệm thu</a>
+                <a class="nav-link" asp-controller="Completion" asp-action="Index">Chi phí, bàn giao và báo cáo</a>
+            </nav>
+        </aside>
+        <div class="content-wrapper">
+            <header class="topbar border-bottom">
+                <span class="text-muted">Hệ thống quản lý dự án thi công xây dựng</span>
+                <partial name="_LoginPartial" />
+            </header>
+            <main role="main" class="container-fluid py-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container-fluid text-center">
+            &copy; 2026 - Construction Project Management System
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

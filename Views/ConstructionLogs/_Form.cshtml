@@ -1,0 +1,16 @@
+@model ConstructionProjectManagement.ViewModels.ConstructionLogEditViewModel
+@using ConstructionProjectManagement.Models
+@{
+    var projects = (IReadOnlyCollection<Project>)ViewBag.Projects;
+}
+<div class="row g-3">
+    <div class="col-md-6"><label asp-for="ProjectId" class="form-label">Dự án</label><select asp-for="ProjectId" class="form-select"><option value="">-- Chọn dự án --</option>@foreach (var project in projects) { <option value="@project.Id">@project.ProjectCode - @project.Name</option> }</select></div>
+    <div class="col-md-6"><label asp-for="LogDate" class="form-label">Ngày nhật ký</label><input asp-for="LogDate" class="form-control" /></div>
+    <div class="col-md-6"><label asp-for="Weather" class="form-label">Thời tiết</label><input asp-for="Weather" class="form-control" /></div>
+    <div class="col-12"><label asp-for="Workforce" class="form-label">Nhân lực</label><textarea asp-for="Workforce" class="form-control"></textarea></div>
+    <div class="col-12"><label asp-for="WorkPerformed" class="form-label">Công việc đã thực hiện</label><textarea asp-for="WorkPerformed" class="form-control"></textarea></div>
+    <div class="col-md-6"><label asp-for="MaterialsUsed" class="form-label">Vật tư sử dụng</label><textarea asp-for="MaterialsUsed" class="form-control"></textarea></div>
+    <div class="col-md-6"><label asp-for="EquipmentUsed" class="form-label">Thiết bị sử dụng</label><textarea asp-for="EquipmentUsed" class="form-control"></textarea></div>
+    <div class="col-12"><label asp-for="Issues" class="form-label">Vấn đề phát sinh</label><textarea asp-for="Issues" class="form-control"></textarea></div>
+    <div class="col-12"><label asp-for="Attachment" class="form-label">Ảnh đính kèm (JPG/PNG, tối đa 10 MB)</label><input asp-for="Attachment" type="file" accept=".jpg,.jpeg,.png" class="form-control" /></div>
+</div>

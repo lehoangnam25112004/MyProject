@@ -1,0 +1,10 @@
+flowchart LR
+    Users["Người dùng"] --> Views["Razor Views<br/>Bootstrap / JavaScript"]
+    Views --> Controllers["MVC Controllers"]
+    Controllers --> Services["Service Layer"]
+    Services --> Context["ApplicationDbContext<br/>Entity Framework Core"]
+    Context --> Sql["SQL Server"]
+    Controllers --> Identity["ASP.NET Core Identity"]
+    Identity --> Auth["Authentication / Authorization"]
+    Auth --> Controllers
+    Services --> Models["Models / ViewModels"]

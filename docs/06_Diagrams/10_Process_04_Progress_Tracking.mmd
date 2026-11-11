@@ -1,0 +1,8 @@
+flowchart TD
+    A["Nhân viên cập nhật tiến độ"] --> B["Lưu lịch sử"]
+    B --> C["Project Manager theo dõi"]
+    C --> D{"Có chậm tiến độ?"}
+    D -- "Không" --> E["Tổng hợp báo cáo"]
+    D -- "Có" --> F["Ghi nguyên nhân"]
+    F --> G["Tạo sự cố/yêu cầu xử lý"]
+    G --> H["Phân công khắc phục và cập nhật"]
